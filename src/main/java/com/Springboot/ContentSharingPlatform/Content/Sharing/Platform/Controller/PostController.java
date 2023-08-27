@@ -66,7 +66,6 @@ public class PostController {
         for (Post post : userPosts)
         {
             User postUser = post.getUser();
-            System.out.println("Inside user object: " + postUser);
 
             PostResponseDto postResponse = new PostResponseDto();
             postResponse.setId(post.getId());
