@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Post</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Create Post</h1>
+  <form id="create-post-form">
+    <div class="form-group">
+      <label for="content">Content:</label>
+      <textarea id="content" name="content" class="form-control" required></textarea>
+    </div>
+    <div class="col-sm-6 col-sm-offset-3">
+      <button id="create-post-button" class="btn btn-primary">Create </button>
+    </div>
+  </form>
+</div>
+<div id="successMessage" class="alert alert-info" style="display: none;">Content Added Successfully!</div>
+
+<script>
+document.getElementById('create-post-button').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    var content = document.getElementById('content').value;
+    var postData = {
+        content: content
+    };
+
+    fetch('api/post/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        document.getElementById("successMessage").style.display = "block";
+        setTimeout(function() {
+            window.location.href = '/home';
+        }, 2000);
+    })
+    .catch(error => {
+        console.error('Error creating post:', error);
+    });
+});
+</script>
+</body>
+</html>
